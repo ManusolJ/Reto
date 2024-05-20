@@ -1,7 +1,7 @@
 package com.example.reto2;
 
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,6 +28,7 @@ import java.util.ResourceBundle;
 
 public class PrimaryController implements Initializable{
 
+    //CONEXION A BASE DE DATOS
     private static Connection getConnexion() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/ajedrez";
         String user = "root";
@@ -35,47 +36,35 @@ public class PrimaryController implements Initializable{
         return DriverManager.getConnection(url, user, password);
     }
 
+    //BOTONES
     @FXML
-    private Button addButton;
+    private Button addButton, modifyButton, exitButton, removeButton, importButton;
 
-    @FXML
-    private Button modifyButton;
-
-    @FXML
-    private Button exitButton;
-
-    @FXML
-    private Button removeButton;
-
-    @FXML
-    private Button importButton;
-
+    //ETIQUETAS
     @FXML
     private Label filterLabel;
 
+    //CAMPOS DE TEXTO
     @FXML
     private TextField filtertxt;
 
+    //TABLA Y LISTA DE OBJETOS
     @FXML
     private TableView<jugador> table;
 
-    ObservableList<jugador> jugadores = FXCollections.observableArrayList();
+    private ObservableList<jugador> jugadores = FXCollections.observableArrayList();
 
+    //COLUMNAS DE LA TABLA
     @FXML
-    private TableColumn rankIniCol;
+    private  TableColumn rankIniCol, NombreJugadorCol, eloCol, fideIDCol, infoCol;
 
+    //SELECCIONADOR Y CAMPOS DE SELECCION
     @FXML
-    private TableColumn NombreJugadorCol;
+    private ChoiceBox<String> cBox;
 
-    @FXML
-    private TableColumn eloCol;
+    String [] choices = {"Open A","Open B"};
 
-    @FXML
-    private TableColumn fideIDCol;
-
-    @FXML
-    private TableColumn infoCol;
-
+    //VARIABLE RECURRENTES
     String querysql = "";
 
     PreparedStatement ps = null;
@@ -86,9 +75,14 @@ public class PrimaryController implements Initializable{
 
     jugador j = null;
 
+    //METODO DE INICIALIZACION
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            cBox.getItems().addAll(choices);
+
+            cBox.setValue("Open A");
+
             loadData();
 
             FilteredList<jugador> filteredList = new FilteredList<>(jugadores, b -> true);
@@ -102,6 +96,7 @@ public class PrimaryController implements Initializable{
 
                     if (jugador.getNombreJugador().toLowerCase().indexOf(lowerCaseFilter) > -1) {
                         return true;
+                        //TODO FILTRAR POR OTROS CAMPOS
                     }/*else if(jugador.getFederacion().toLowerCase().indexOf(lowerCaseFilter) > -1) {
                     return true;
                 }else if(jugador.getInfo().toLowerCase().indexOf(lowerCaseFilter) > -1) {
@@ -112,20 +107,61 @@ public class PrimaryController implements Initializable{
                         return false;
                     }
                 });
+
+                SortedList<jugador> sortedList = new SortedList<>(filteredList);
+
+                sortedList.comparatorProperty().bind(table.comparatorProperty());
+
+                table.setItems(sortedList);
             });
 
-            SortedList<jugador> sortedList = new SortedList<>(filteredList);
+            cBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                    try {
+                        loadData();
+                    }catch (SQLException e) {
+                        System.out.println("CHOICE ERROR!");
+                    }
 
-            sortedList.comparatorProperty().bind(table.comparatorProperty());
-
-            table.setItems(sortedList);
-
+                }
+            });
         }catch (SQLException e){
-            e.printStackTrace();
+            System.out.println("SQL ERROR!");
         }
     }
 
+    //CARGA DATOS DE LA BASE A LISTA DE JUGADORES Y LOS AÑADE A LA TABLA
+    public void refreshTable() throws SQLException{
+        jugadores.clear();
 
+        if(cBox.getValue().contains("Open A")) {
+            querysql = "SELECT * FROM jugador WHERE tipoTorneo like 'A'";
+
+        }else{
+            querysql = "SELECT * FROM jugador WHERE tipoTorneo like 'B'";
+        }
+
+        ps = cnx.prepareStatement(querysql);
+        rs = ps.executeQuery();
+
+        while(rs.next()){
+            jugadores.add(new jugador(
+                    rs.getInt(1),
+                    rs.getInt(2),
+                    rs.getString(3),
+                    rs.getInt(4),
+                    rs.getInt(5),
+                    rs.getBoolean(6),
+                    rs.getBoolean(7),
+                    rs.getBoolean(8),
+                    rs.getString(9))
+            );
+        }
+        table.setItems(jugadores);
+    }
+
+    //CARGA LOS DATOS A CADA CELDA
     public void loadData() throws SQLException{
         cnx = getConnexion();
 
@@ -153,46 +189,28 @@ public class PrimaryController implements Initializable{
         });
     }
 
-    public void refreshTable() throws SQLException{
-        jugadores.clear();
-
-        querysql = "SELECT * FROM jugador";
-        ps = cnx.prepareStatement(querysql);
-        rs = ps.executeQuery();
-
-        while(rs.next()){
-            jugadores.add(new jugador(
-                    rs.getInt(1),
-                    rs.getInt(2),
-                    rs.getString(3),
-                    rs.getInt(4),
-                    rs.getInt(5),
-                    rs.getBoolean(6),
-                    rs.getBoolean(7),
-                    rs.getBoolean(8),
-                    rs.getString(9))
-            );
-        }
-        table.setItems(jugadores);
-    }
-
+    //TERMINA PROCESO DE VENTANA Y TE LLEVA A SELECTIONSCREEN
     public void endAction() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("selectionScreen.fxml"));
 
         Parent root = loader.load();
 
         Scene scene = new Scene(root);
+
         Stage stage = new Stage();
 
         stage.setScene(scene);
+
         stage.setTitle("Selection Screen");
+
         stage.show();
 
         Stage mystage = (Stage) filterLabel.getScene().getWindow();
-        mystage.close();
 
+        mystage.close();
     }
 
+    //AÑADE JUGADOR A BASE DE DATOS
     public void addAction(ActionEvent event) throws IOException, SQLException {
         jugador j = null;
 
@@ -212,10 +230,12 @@ public class PrimaryController implements Initializable{
         j = controlador.getJugador();
 
         querysql = "INSERT INTO jugador (rankIni,posicion,nombreJugador,fideID,ELO,gen,CV,hotel,tipoTorneo values (?,?,?,?,?,?,?,?,?)";
+        //TODO TERMINAR INSERCION DE JUGADOR EN DB
     }
 
+    //HACE DELETE SOBRE JUGADOR SELECCIONADO EN TABLA
     public void deleteAction(ActionEvent event)throws SQLException{
-        jugador j = this.table.getSelectionModel().getSelectedItem();
+        j = this.table.getSelectionModel().getSelectedItem();
 
         if (j == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -236,11 +256,10 @@ public class PrimaryController implements Initializable{
 
             refreshTable();
         }
-
     }
 
+    //REALIZA MODIFICACION SOBRE JUGADOR SELECCIONADO
     public void modifyAction(ActionEvent event){
-
         jugador j = this.table.getSelectionModel().getSelectedItem();
 
         if (j == null) {
@@ -281,10 +300,11 @@ public class PrimaryController implements Initializable{
                 alert.setContentText(e.getMessage());
                 alert.showAndWait();
             }
-
         }
+        //TODO REPASAR COMO FUNCIONA CODIGO
     }
 
+    //ELIGE ARCHIVO CON DATOS Y LOS VUELCA EN BASE DE DATOS
     public void addDataAction(ActionEvent event){
         FileChooser fc = new FileChooser();
 
@@ -293,7 +313,8 @@ public class PrimaryController implements Initializable{
         Stage stage = new Stage();
 
         fc.showOpenDialog(stage);
-    }
 
+        //TODO TERMINAR INSERCION DE DATOS EN DB
+    }
 }
 

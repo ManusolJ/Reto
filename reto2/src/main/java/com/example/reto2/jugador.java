@@ -8,6 +8,8 @@ import java.util.Scanner;
 
 public class jugador {
 
+    //TODO COMENTAR CODIGO
+
     static{
         try{
             Connection cnx = getConnexion();

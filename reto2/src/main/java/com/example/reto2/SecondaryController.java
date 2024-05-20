@@ -12,6 +12,8 @@ import java.util.ResourceBundle;
 
 public class SecondaryController implements Initializable {
 
+    //TODO COMENTAR CODIGO
+
     @FXML
     private Button cancelButton;
 

@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 
 public class SelectionScreen implements Initializable {
 
+    //TODO COMENTAR CODIGO
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -46,7 +47,7 @@ public class SelectionScreen implements Initializable {
         Scene scene = new Scene(primaryScene);
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Cringe");
+        stage.setTitle("Datos del Torneo");
         stage.setScene(scene);
         stage.show();
 
@@ -60,5 +61,9 @@ public class SelectionScreen implements Initializable {
 
         Stage myStage = (Stage) this.datosJugadores.getScene().getWindow();
         myStage.close();
+    }
+
+    public void openPrizeScreen(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("prizeView.fxml"));
     }
 }
