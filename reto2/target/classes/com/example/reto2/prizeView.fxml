@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="572.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reto2.PrizeController">
+   <children>
+      <Label fx:id="filterLabel" layoutX="14.0" layoutY="8.0" prefHeight="31.0" prefWidth="60.0" text="Filtrar:" />
+      <TextField fx:id="txtFilter" layoutX="14.0" layoutY="46.0" prefHeight="25.0" prefWidth="128.0" />
+      <Button fx:id="exitBtn" layoutX="70.0" layoutY="518.0" mnemonicParsing="false" onAction="#endAction" prefHeight="31.0" prefWidth="69.0" text="Salir" />
+      <TableView fx:id="table" layoutX="212.0" layoutY="23.0" prefHeight="526.0" prefWidth="419.0">
+        <columns>
+          <TableColumn fx:id="posCol" prefWidth="118.0" text="Posicion" />
+          <TableColumn fx:id="nameCol" prefWidth="146.0" text="Nombre" />
+            <TableColumn fx:id="prizeCol" prefWidth="154.0" text="Importe" />
+        </columns>
+      </TableView>
+      <ChoiceBox fx:id="tournChoiceBox" layoutX="14.0" layoutY="95.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="prizeChoiceBox" layoutX="14.0" layoutY="149.0" prefWidth="150.0" />
+   </children>
+</AnchorPane>

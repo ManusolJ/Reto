@@ -6,7 +6,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="418.0" prefWidth="623.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reto2.SelectionScreen">
    <children>
       <Button fx:id="datosJugadores" layoutX="88.0" layoutY="151.0" mnemonicParsing="false" onAction="#openData" prefHeight="85.0" prefWidth="172.0" text="Datos de jugadores" />
-      <Button fx:id="premiosGanados" layoutX="363.0" layoutY="151.0" mnemonicParsing="false" prefHeight="85.0" prefWidth="172.0" text="Premios" />
+      <Button fx:id="premiosGanados" layoutX="363.0" layoutY="151.0" mnemonicParsing="false" onAction="#openPrizeScreen" prefHeight="85.0" prefWidth="172.0" text="Premios" />
       <Button fx:id="clsButton" layoutX="260.0" layoutY="313.0" mnemonicParsing="false" onAction="#closeAction" prefHeight="39.0" prefWidth="103.0" text="Salir" />
    </children>
 </AnchorPane>

@@ -25,13 +25,7 @@ public class SelectionScreen implements Initializable {
     }
 
     @FXML
-    private Button clsButton;
-
-    @FXML
-    private Button datosJugadores;
-
-    @FXML
-    private Button premiosGanados;
+    private Button clsButton,datosJugadores,premiosGanados;
 
     public void closeAction(ActionEvent event) {
         Platform.exit();
@@ -40,9 +34,9 @@ public class SelectionScreen implements Initializable {
     public void openData(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("primaryView.fxml"));
 
-        Parent primaryScene = loader.load();
-
         PrimaryController controller = loader.getController();
+
+        Parent primaryScene = loader.load();
 
         Scene scene = new Scene(primaryScene);
         Stage stage = new Stage();
@@ -65,5 +59,27 @@ public class SelectionScreen implements Initializable {
 
     public void openPrizeScreen(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("prizeView.fxml"));
+
+        PrizeController controller = loader.getController();
+
+        Parent primaryScene = loader.load();
+
+        Scene scene = new Scene(primaryScene);
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Ganadores del Torneo");
+        stage.setScene(scene);
+        stage.show();
+
+        stage.setOnCloseRequest(e -> {
+            try {
+                controller.endAction();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        Stage myStage = (Stage) this.datosJugadores.getScene().getWindow();
+        myStage.close();
     }
 }

@@ -140,5 +140,18 @@ public class jugador {
         return Objects.hashCode(fideID);
     }
 
-
+    @Override
+    public String toString() {
+        return "jugador{" +
+                "rankIni=" + rankIni +
+                ", posicion=" + posicion +
+                ", nombreJugador='" + nombreJugador + '\'' +
+                ", fideID=" + fideID +
+                ", elo=" + elo +
+                ", gen=" + gen +
+                ", cv=" + cv +
+                ", hotel=" + hotel +
+                ", tipoTorneo='" + tipoTorneo + '\'' +
+                '}';
+    }
 }

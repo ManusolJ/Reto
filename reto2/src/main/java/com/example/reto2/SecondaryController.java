@@ -15,58 +15,37 @@ public class SecondaryController implements Initializable {
     //TODO COMENTAR CODIGO
 
     @FXML
-    private Button cancelButton;
+    private Button cancelButton,saveButton;
 
     @FXML
-    private CheckBox cvCheck;
+    private CheckBox cvCheck,genCheck,hotelCheck;
 
     @FXML
-    private Label eloLabel;
+    private Label eloLabel,idLabel,nomLabel,rankingLabel;
 
     @FXML
-    private CheckBox genCheck;
-
-    @FXML
-    private CheckBox hotelCheck;
-
-    @FXML
-    private Label idLabel;
-
-    @FXML
-    private Label nomLabel;
-
-    @FXML
-    private Label rankingLabel;
-
-    @FXML
-    private Button saveButton;
-
-    @FXML
-    private TextField txtElo;
-
-    @FXML
-    private TextField txtID;
-
-    @FXML
-    private TextField txtNom;
-
-    @FXML
-    private TextField txtRank;
+    private TextField txtElo,txtID,txtNom,txtRank;
 
     private jugador jugador;
 
     private ObservableList<jugador> jugadores;
 
+    @FXML
+    private ChoiceBox<String> tournamentChoiceBox;
+
+    String [] choices = {"A","B"};
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        tournamentChoiceBox.getItems().addAll(choices);
     }
 
-    public void initAtributtes(ObservableList<jugador> jugadores) {
+    //TODO Revisar si esto hace falta realmente
+    /*public void initAtributtes(ObservableList<jugador> jugadores) {
         this.jugadores = jugadores;
-    }
+    }*/
 
-    public void initAtributtes(ObservableList<jugador> jugadores, jugador jugador) {
+    public void getAttributes(ObservableList<jugador> jugadores, jugador jugador) {
         this.jugadores = jugadores;
         this.jugador = jugador;
         this.txtNom.setText(this.jugador.getNombreJugador());
@@ -88,6 +67,10 @@ public class SecondaryController implements Initializable {
         return jugador;
     }
 
+    public boolean addChecker(){
+        return true;
+    }
+
     @FXML
     private void exit(ActionEvent event){
         this.jugador = null;
@@ -98,9 +81,9 @@ public class SecondaryController implements Initializable {
     @FXML
     private void save(ActionEvent event) {
         String nomJugador = this.txtNom.getText();
-        String tipoTorneo = jugador.getTipoTorneo();
+        String tipoTorneo = this.tournamentChoiceBox.getValue();
         int rankIni = Integer.parseInt(this.txtRank.getText());
-        int posicion = jugador.getPosicion();
+        int posicion = 0;
         int elo = Integer.parseInt(this.txtElo.getText());
         int fideID = Integer.parseInt(this.txtID.getText());
         boolean gen;
@@ -125,7 +108,6 @@ public class SecondaryController implements Initializable {
         jugador j = new jugador(rankIni, posicion, nomJugador, fideID, elo, gen, cv, hotel, tipoTorneo);
 
         if (this.jugador != null) {
-
             this.jugador.setNombreJugador(nomJugador);
             this.jugador.setRankIni(rankIni);
             this.jugador.setElo(elo);
@@ -144,7 +126,18 @@ public class SecondaryController implements Initializable {
 
             Stage stage = (Stage) this.saveButton.getScene().getWindow();
             stage.close();
-        } else {
+        } else if(addChecker()) {
+            jugador = j;
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("Informacion");
+            alert.setContentText("Se ha añadido un nuevo registro correctamente");
+            alert.showAndWait();
+
+            Stage stage = (Stage) this.saveButton.getScene().getWindow();
+            stage.close();
+        }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setTitle("Error");
@@ -152,6 +145,8 @@ public class SecondaryController implements Initializable {
             alert.showAndWait();
         }
     }
+
+
 
 
 }
