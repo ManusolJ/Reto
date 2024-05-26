@@ -8,39 +8,14 @@ import java.util.Scanner;
 
 public class jugador {
 
-    static{
-        try{
-            Connection cnx = getConnexion();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
+    //Atributos del objeto.
+    private int rankIni, posicion, fideID, elo;
 
-    private static Connection getConnexion() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/ajedrez";
-        String user = "root";
-        String password = "root";
-        return DriverManager.getConnection(url, user, password);
-    }
+    private String nombreJugador, tipoTorneo;
 
-    private int rankIni;
+    private boolean gen, cv, hotel;
 
-    private int posicion;
-
-    private String nombreJugador;
-
-    private int fideID;
-
-    private int elo;
-
-    private boolean gen;
-
-    private boolean cv;
-
-    private boolean hotel;
-
-    private String tipoTorneo;
-
+    //Constructor del objeto.
     public jugador(int rankIni,int posicion,String nombreJugador,int fideID,int elo,boolean gen,boolean cv,boolean hotel,String tipoTorneo){
         this.rankIni = rankIni;
         this.posicion = posicion;
@@ -53,6 +28,7 @@ public class jugador {
         this.tipoTorneo = tipoTorneo;
     }
 
+    //GETTERs y SETTERs.
     public int getRankIni() {
         return rankIni;
     }
@@ -125,6 +101,7 @@ public class jugador {
         this.tipoTorneo = tipoTorneo;
     }
 
+    //Comparador.
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -138,5 +115,19 @@ public class jugador {
         return Objects.hashCode(fideID);
     }
 
-
+    //ToString para realizar pruebas.
+    @Override
+    public String toString() {
+        return "jugador{" +
+                "rankIni=" + rankIni +
+                ", posicion=" + posicion +
+                ", nombreJugador='" + nombreJugador + '\'' +
+                ", fideID=" + fideID +
+                ", elo=" + elo +
+                ", gen=" + gen +
+                ", cv=" + cv +
+                ", hotel=" + hotel +
+                ", tipoTorneo='" + tipoTorneo + '\'' +
+                '}';
+    }
 }

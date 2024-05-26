@@ -12,59 +12,48 @@ import java.util.ResourceBundle;
 
 public class SecondaryController implements Initializable {
 
-    @FXML
-    private Button cancelButton;
+    //TODO Arreglar updater, no funciona bien por algún motivo.
 
+    //Botones.
     @FXML
-    private CheckBox cvCheck;
+    private Button cancelButton,saveButton;
 
+    //Cajas de seleccion.
     @FXML
-    private Label eloLabel;
+    private CheckBox cvCheck,genCheck,hotelCheck;
 
+    //Etiquetas.
     @FXML
-    private CheckBox genCheck;
+    private Label eloLabel,idLabel,nomLabel,rankingLabel;
 
+    //Campos de texto.
     @FXML
-    private CheckBox hotelCheck;
+    private TextField txtElo,txtID,txtNom,txtRank;
 
+    //Selector de tipo de torneo.
     @FXML
-    private Label idLabel;
+    private ChoiceBox<String> tournamentChoiceBox;
 
-    @FXML
-    private Label nomLabel;
+    String [] choices = {"A","B"};
 
-    @FXML
-    private Label rankingLabel;
-
-    @FXML
-    private Button saveButton;
-
-    @FXML
-    private TextField txtElo;
-
-    @FXML
-    private TextField txtID;
-
-    @FXML
-    private TextField txtNom;
-
-    @FXML
-    private TextField txtRank;
-
+    //Objeto jugador sin definir;
     private jugador jugador;
 
+    //Lista de jugadores sin definir;
     private ObservableList<jugador> jugadores;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        tournamentChoiceBox.getItems().addAll(choices);
     }
 
-    public void initAtributtes(ObservableList<jugador> jugadores) {
+    //TODO Revisar si esto hace falta realmente
+    /*public void initAtributtes(ObservableList<jugador> jugadores) {
         this.jugadores = jugadores;
-    }
+    }*/
 
-    public void initAtributtes(ObservableList<jugador> jugadores, jugador jugador) {
+    //Pasa los datos del jugador seleccionado.
+    public void getAttributes(ObservableList<jugador> jugadores, jugador jugador) {
         this.jugadores = jugadores;
         this.jugador = jugador;
         this.txtNom.setText(this.jugador.getNombreJugador());
@@ -80,12 +69,20 @@ public class SecondaryController implements Initializable {
         if (this.jugador.isHotel()) {
             hotelCheck.fire();
         }
+        tournamentChoiceBox.setValue(this.jugador.getTipoTorneo());
     }
 
+    //Devuelve el jugador modificado.
     public jugador getJugador() {
         return jugador;
     }
 
+    //Diferencia entre añadir y modificar.
+    public boolean addChecker(){
+        return true;
+    }
+
+    //Cancela accion de modificacion.
     @FXML
     private void exit(ActionEvent event){
         this.jugador = null;
@@ -96,41 +93,24 @@ public class SecondaryController implements Initializable {
     @FXML
     private void save(ActionEvent event) {
         String nomJugador = this.txtNom.getText();
-        String tipoTorneo = jugador.getTipoTorneo();
+        String tipoTorneo = this.tournamentChoiceBox.getValue();
         int rankIni = Integer.parseInt(this.txtRank.getText());
-        int posicion = jugador.getPosicion();
         int elo = Integer.parseInt(this.txtElo.getText());
         int fideID = Integer.parseInt(this.txtID.getText());
-        boolean gen;
-        boolean cv;
-        boolean hotel;
-        if (this.genCheck.isSelected()) {
-            gen = true;
-        } else {
-            gen = false;
-        }
-        if (this.cvCheck.isSelected()) {
-            cv = true;
-        } else {
-            cv = false;
-        }
-        if (this.hotelCheck.isSelected()) {
-            hotel = true;
-        } else {
-            hotel = false;
-        }
+        boolean gen = this.genCheck.isSelected();
+        boolean cv = this.cvCheck.isSelected();
+        boolean hotel = this.hotelCheck.isSelected();
 
-        jugador j = new jugador(rankIni, posicion, nomJugador, fideID, elo, gen, cv, hotel, tipoTorneo);
+        jugador j = new jugador(rankIni, 0, nomJugador, fideID, elo, gen, cv, hotel, tipoTorneo);
 
         if (this.jugador != null) {
-
             this.jugador.setNombreJugador(nomJugador);
             this.jugador.setRankIni(rankIni);
             this.jugador.setElo(elo);
             this.jugador.setCv(cv);
             this.jugador.setGen(gen);
             this.jugador.setHotel(hotel);
-            this.jugador.setPosicion(posicion);
+            this.jugador.setPosicion(0);
             this.jugador.setFideID(fideID);
             this.jugador.setTipoTorneo(tipoTorneo);
 
@@ -142,7 +122,18 @@ public class SecondaryController implements Initializable {
 
             Stage stage = (Stage) this.saveButton.getScene().getWindow();
             stage.close();
-        } else {
+        } else if(addChecker()) {
+            jugador = j;
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("Informacion");
+            alert.setContentText("Se ha añadido un nuevo registro correctamente");
+            alert.showAndWait();
+
+            Stage stage = (Stage) this.saveButton.getScene().getWindow();
+            stage.close();
+        }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setTitle("Error");
@@ -150,6 +141,4 @@ public class SecondaryController implements Initializable {
             alert.showAndWait();
         }
     }
-
-
 }
