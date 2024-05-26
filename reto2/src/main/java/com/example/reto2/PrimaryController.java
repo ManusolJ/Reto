@@ -35,7 +35,6 @@ import java.util.logging.Logger;
 public class PrimaryController implements Initializable{
     //TODO Comprobar cualquier //TODO// que hay en el codigo.
     //TODO Intentar hacer funciones de trozos de codigo que sean muy reutilizados.
-    //TODO Acabad con mi sufrimiento.
 
     //Conexion a base de datos.
     private static Connection getConnexion() throws SQLException {
