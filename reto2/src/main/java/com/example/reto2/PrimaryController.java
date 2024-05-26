@@ -105,14 +105,7 @@ public class PrimaryController implements Initializable{
 
                     if (jugador.getNombreJugador().toLowerCase().indexOf(lowerCaseFilter) > -1) {
                         return true;
-                        //TODO FILTRAR POR OTROS CAMPOS
-                    }/*else if(jugador.getFederacion().toLowerCase().indexOf(lowerCaseFilter) > -1) {
-                    return true;
-                }else if(jugador.getInfo().toLowerCase().indexOf(lowerCaseFilter) > -1) {
-                    return true;
-                }else if(jugador.getTitulo().toLowerCase().indexOf(lowerCaseFilter) > -1) {
-                    return true;
-                }*/ else {
+                    }else {
                         return false;
                     }
                 });
