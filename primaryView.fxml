@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="563.0" prefWidth="779.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reto2.PrimaryController" stylesheets="@hojaestilo.css">
+    <children>
+      <ImageView fitHeight="563.0" fitWidth="779.0" pickOnBounds="true">
+         <image>
+            <Image url="@azul.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="130.0" fitWidth="133.0" layoutX="24.0" layoutY="372.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@peon.png" />
+         </image>
+      </ImageView>
+        <TableView fx:id="table" layoutX="199.0" layoutY="20.0" prefHeight="524.0" prefWidth="566.0" style="-fx-border-color: black;">
+            <columns>
+                <TableColumn fx:id="NombreJugadorCol" prefWidth="151.0" style="-fx-border-color: black;" text="Nombre" />
+                <TableColumn fx:id="rankIniCol" prefWidth="98.0" style="-fx-border-color: black;" text="Rango Inicial" />
+            <TableColumn fx:id="eloCol" prefWidth="87.0" style="-fx-border-color: black;" text="ELO" />
+                <TableColumn fx:id="fideIDCol" minWidth="0.0" prefWidth="118.0" style="-fx-border-color: black;" text="FIDE ID" />
+                <TableColumn fx:id="infoCol" prefWidth="110.0" style="-fx-border-color: #716d6d;" text="Info" />
+            </columns>
+        </TableView>
+        <Button fx:id="addB" layoutX="12.0" layoutY="213.0" mnemonicParsing="false" onAction="#addAction" prefHeight="34.0" prefWidth="119.0" text="Añadir" styleClass="boton-mas"/>
+        <Button fx:id="modB" layoutX="12.0" layoutY="161.0" mnemonicParsing="false" onAction="#modifyAction" prefHeight="34.0" prefWidth="119.0" text="Modificar" styleClass="boton-modify"/>
+        <Label fx:id="filterLabel" layoutX="15.0" layoutY="30.0" prefHeight="26.0" prefWidth="149.0" text="Filtrar :">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+        <TextField fx:id="filtertxt" layoutX="14.0" layoutY="59.0" prefHeight="26.0" prefWidth="150.0" />
+        <Button fx:id="rmB" layoutX="12.0" layoutY="265.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="34.0" prefWidth="119.0" text="Eliminar" styleClass="boton-eliminar"/>
+        <Button fx:id="outB" layoutX="35.0" layoutY="515.0" mnemonicParsing="false" onAction="#endAction" prefHeight="26.0" prefWidth="107.0" text="Salir" styleClass="boton-personalizado"/>
+        <Button fx:id="importButton" layoutX="12.0" layoutY="317.0" mnemonicParsing="false" onAction="#addDataAction" prefHeight="34.0" prefWidth="119.0" text="Importar Datos" styleClass="boton-personalizado"/>
+      <ChoiceBox fx:id="cBox" layoutX="14.0" layoutY="102.0" prefWidth="150.0" />
+      <Label layoutX="8.0" layoutY="369.0" prefHeight="52.0" prefWidth="56.0" text="BENI">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="117.0" layoutY="380.0" prefHeight="29.0" prefWidth="69.0" text="DORM">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="7.0" layoutY="423.0" text="OPEN">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="117.0" layoutY="423.0" prefHeight="29.0" prefWidth="69.0" text="CHESS">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="8.0" layoutY="484.0" text="20">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="153.0" layoutY="484.0" text="23">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Label>
+    </children>
+</AnchorPane>
