@@ -8,14 +8,30 @@ import java.util.Scanner;
 
 public class jugador {
 
-    //Atributos del objeto.
-    private int rankIni, posicion, fideID, elo;
+    // Declaración de atributos de la tabla jugador
+    // Ranking Inicial
+    private int rankIni;
 
-    private String nombreJugador, tipoTorneo;
+    // Posición / Puesto final
+    private int posicion;
 
-    private boolean gen, cv, hotel;
+    private String nombreJugador;
 
-    //Constructor del objeto.
+    private int fideID;
+
+    private int elo;
+
+    // General
+    private boolean gen;
+
+    // Comunidad Valenciana
+    private boolean cv;
+
+    private boolean hotel;
+
+    // OpenA u OpenB
+    private String tipoTorneo;
+
     public jugador(int rankIni,int posicion,String nombreJugador,int fideID,int elo,boolean gen,boolean cv,boolean hotel,String tipoTorneo){
         this.rankIni = rankIni;
         this.posicion = posicion;
@@ -28,7 +44,8 @@ public class jugador {
         this.tipoTorneo = tipoTorneo;
     }
 
-    //GETTERs y SETTERs.
+    // Getters y Setters
+
     public int getRankIni() {
         return rankIni;
     }
@@ -101,7 +118,7 @@ public class jugador {
         this.tipoTorneo = tipoTorneo;
     }
 
-    //Comparador.
+    // Determina si hay igualdad
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -110,12 +127,13 @@ public class jugador {
         return fideID == jugador.fideID;
     }
 
+    // Identificador
     @Override
     public int hashCode() {
         return Objects.hashCode(fideID);
     }
 
-    //ToString para realizar pruebas.
+    // Método toString
     @Override
     public String toString() {
         return "jugador{" +

@@ -19,48 +19,45 @@ import java.util.logging.Logger;
 
 public class SelectionScreen implements Initializable {
 
-    //Botones.
-    @FXML
-    private Button clsButton,datosJugadores,premiosGanados;
-
+    // Método de inicialización que se llama después de cargar el archivo FXML
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 
-    //Cierre de aplicacion.
+    // Referencias a los componentes definidos en el archivo FXML
+    @FXML
+    private Button clsButton, datosJugadores, premiosGanados;
+
+    // Método para cerrar la aplicación cuando se presiona el botón de cerrar
     public void closeAction(ActionEvent event) {
         Platform.exit();
     }
 
-    //Carga la escena de datos de jugadores.
+    // Método para abrir la vista primaria cuando se presiona el botón correspondiente
     public void openData(ActionEvent event) throws IOException {
         try {
-            //Carga la vista.
+            // Cargar el archivo FXML para la vista primaria
             FXMLLoader loader = new FXMLLoader(getClass().getResource("primaryView.fxml"));
 
+            // Cargar la vista primaria
             Parent primaryScene = loader.load();
 
-            //Cargo el controlador de la vista.
+            // Obtener el controlador asociado con la vista primaria.
             PrimaryController controller = loader.getController();
 
-            //Creo y asocio la escena.
+            // Configurar una nueva escena y escenario para la vista primaria
             Scene scene = new Scene(primaryScene);
-
             Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL); // Hacer que la nueva ventana sea modal
+            stage.setTitle("Datos del Torneo"); // Establecer el título de la nueva ventana
+            stage.setScene(scene); // Establecer la escena de la nueva ventana
+            stage.show(); // Mostrar la nueva ventana
 
-            stage.setScene(scene);
-
-            stage.setTitle("Datos del Torneo");
-
-            stage.show();
-
-            //Accion que tiene realizar al cerrar.
+            // Configurar la acción al cerrar la ventana
             stage.setOnCloseRequest(e -> controller.endAction());
 
-            //Cierro la escena actual.
+            // Cerrar la ventana actual
             Stage myStage = (Stage) this.datosJugadores.getScene().getWindow();
-
             myStage.close();
 
         }catch (Exception e){
@@ -68,33 +65,32 @@ public class SelectionScreen implements Initializable {
         }
     }
 
-    //Carga la escena de premios ganados.
+    // Método para abrir la pantalla de premios cuando se presiona el botón correspondiente
     public void openPrizeScreen(ActionEvent event) throws IOException {
-        //Cargo la vista.
+        // Cargar el archivo FXML para la vista de premios
         FXMLLoader loader = new FXMLLoader(getClass().getResource("prizeView.fxml"));
 
+        // Cargar la vista de premios
         Parent primaryScene = loader.load();
 
-        //Cargo el controlador.
+        // Obtener el controlador asociado con la vista de premios
         PrizeController controller = loader.getController();
 
-        //Creo y asocio la escena.
+        // Configurar una nueva escena y escenario para la vista de premios
         Scene scene = new Scene(primaryScene);
-
         Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL); // Hacer que la nueva ventana sea modal
+        stage.setTitle("Ganadores del Torneo"); // Establecer el título de la nueva ventana
+        stage.setScene(scene); // Establecer la escena de la nueva ventana
+        stage.show(); // Mostrar la nueva ventana
 
-        stage.setTitle("Ganadores del Torneo");
-
-        stage.setScene(scene);
-
-        stage.show();
-
-        //Accion a realizar al cerrar la escena.
+        // Configurar la acción al cerrar la ventana
         stage.setOnCloseRequest(e -> controller.endAction());
 
-        //Cierro la escena actual.
-        Stage myStage = (Stage) this.premiosGanados.getScene().getWindow();
-
+        // Cerrar la ventana actual
+        Stage myStage = (Stage) this.datosJugadores.getScene().getWindow();
         myStage.close();
     }
+
+    //TODO Darle estilo a los botones, configurar dynamic resize.
 }

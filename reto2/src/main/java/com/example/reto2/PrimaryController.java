@@ -123,13 +123,13 @@ public class PrimaryController implements Initializable{
                     try {
                         loadData();
                     }catch (SQLException e) {
-                        System.out.println("CHOICE ERROR!");
+                        e.printStackTrace();
                     }
 
                 }
             });
         }catch (SQLException e){
-            System.out.println("SQL ERROR!");
+            e.printStackTrace();
         }
     }
 
@@ -144,8 +144,8 @@ public class PrimaryController implements Initializable{
             querysql = "SELECT * FROM jugador WHERE tipoTorneo like 'B'";
         }
 
-        ps = cnx.prepareStatement(querysql)
-        ;
+        ps = cnx.prepareStatement(querysql);
+
         rs = ps.executeQuery();
 
         while(rs.next()){
@@ -257,7 +257,7 @@ public class PrimaryController implements Initializable{
         stage.showAndWait();
 
         //Llamamos a este metodo para decirle al controlador que estamos añadiendo, y no modificando.
-        controlador.addChecker();
+        /*controlador.addChecker();*/
 
         //Cargamos los datos introducidos a un objeto de jugador.
         j = controlador.getJugador();
@@ -315,6 +315,7 @@ public class PrimaryController implements Initializable{
 
     //Modifica los datos del jugador seleccionado.
     public void modifyAction(ActionEvent event){
+        //TODO NO FUNCIONA BIEN, HAY QUE COMPROBAR POR QUE.
 
         //Creo un jugador de la seleccion de la tabla.
         j = this.table.getSelectionModel().getSelectedItem();
@@ -372,8 +373,6 @@ public class PrimaryController implements Initializable{
 
     //Elige archivo csv y vuelca sus datos en la base de datos.
     public void importDataAction(ActionEvent event) throws IOException,SQLException {
-
-        //TODO Mostrar ventana para elegir la insercion en openA o en OpenB
 
         //Ventana de elegir archivo mediante explorador de windows.
         FileChooser fc = new FileChooser();
@@ -464,7 +463,6 @@ public class PrimaryController implements Initializable{
                 bw.newLine();
                 bw.write("--------------------------------");
             }
-
             ps.close();
             bw.close();
         }
