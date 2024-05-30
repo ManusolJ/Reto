@@ -38,9 +38,9 @@ public class PrimaryController implements Initializable{
 
     //Conexion a base de datos.
     private static Connection getConnexion() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/ajedrez";
+        String url = "jdbc:mariadb://ajedrezalpha.clt77wc4mhcd.us-east-1.rds.amazonaws.com:3306/ajedrez";
         String user = "root";
-        String password = "root";
+        String password = "RootRoot1";
         return DriverManager.getConnection(url, user, password);
     }
 
@@ -139,7 +139,6 @@ public class PrimaryController implements Initializable{
 
         if(tournChoiceBox.getValue().contains("Open A")) {
             querysql = "SELECT * FROM jugador WHERE tipoTorneo like 'A'";
-
         }else{
             querysql = "SELECT * FROM jugador WHERE tipoTorneo like 'B'";
         }

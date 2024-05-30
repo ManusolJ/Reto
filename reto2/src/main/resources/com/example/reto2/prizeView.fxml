@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="572.0" prefWidth="728.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reto2.PrizeController" stylesheets="@hojaestilo.css">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="572.0" prefWidth="728.0" style="-fx-background-color: grey;" stylesheets="@hojaestilo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reto2.PrizeController">
    <children>
       <ImageView fitHeight="572.0" fitWidth="728.0" pickOnBounds="true">
          <image>
@@ -22,7 +28,7 @@
             <Font name="System Bold" size="18.0" />
          </font></Label>
       <TextField fx:id="txtFilter" layoutX="14.0" layoutY="74.0" prefHeight="26.0" prefWidth="150.0" />
-      <Button fx:id="exitBtn" layoutX="70.0" layoutY="518.0" mnemonicParsing="false" onAction="#endAction" prefHeight="31.0" prefWidth="69.0" text="Salir" styleClass="boton-personalizado"/>
+      <Button fx:id="exitBtn" layoutX="70.0" layoutY="518.0" mnemonicParsing="false" onAction="#endAction" prefHeight="31.0" prefWidth="69.0" styleClass="boton-personalizado" text="Salir" />
       <TableView fx:id="table" layoutX="240.0" layoutY="23.0" prefHeight="526.0" prefWidth="474.0" style="-fx-border-color: black;">
         <columns>
           <TableColumn fx:id="posCol" prefWidth="162.0" style="-fx-border-color: black;" text="Posicion" />
@@ -31,6 +37,7 @@
         </columns>
       </TableView>
       <ChoiceBox fx:id="tournChoiceBox" layoutX="14.0" layoutY="119.0" prefWidth="150.0" />
-      <ChoiceBox fx:id="prizeChoiceBox" layoutX="14.0" layoutY="199.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="prizeChoiceBox" layoutX="14.0" layoutY="157.0" prefWidth="150.0" />
+      <Button fx:id="winnerImport" layoutX="16.0" layoutY="202.0" mnemonicParsing="false" onAction="#importWinnerAction" prefHeight="31.0" prefWidth="150.0" text="Importar ganadores" />
    </children>
 </AnchorPane>

@@ -27,10 +27,17 @@ public class jugador {
     // Comunidad Valenciana
     private boolean cv;
 
+    //Alojamiento
     private boolean hotel;
 
     // OpenA u OpenB
     private String tipoTorneo;
+
+    public jugador(int posicion,int rankIni, String nombreJugador) {
+        this.posicion = posicion;
+        this.rankIni = rankIni;
+        this.nombreJugador = nombreJugador;
+    }
 
     public jugador(int rankIni,int posicion,String nombreJugador,int fideID,int elo,boolean gen,boolean cv,boolean hotel,String tipoTorneo){
         this.rankIni = rankIni;
