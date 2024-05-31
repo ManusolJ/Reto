@@ -19,9 +19,6 @@ public class jugador {
     // Marcador para ver si opta a general, comunidad valenciana, alojamiento.
     private boolean gen,cv,hotel;
 
-    //El premio asignado al jugador.
-    private premio premioAsignado;
-
     //Constructor de jugador para realizar update sobre la posicion final.
     public jugador(int posicion,int rankIni, String nombreJugador) {
         this.posicion = posicion;
@@ -40,19 +37,6 @@ public class jugador {
         this.cv = cv;
         this.hotel = hotel;
         this.tipoTorneo = tipoTorneo;
-    }
-
-    public jugador(int rankIni,int posicion,String nombreJugador,int fideID,int elo,boolean gen,boolean cv,boolean hotel,String tipoTorneo,premio premioAsignado){
-        this.rankIni = rankIni;
-        this.posicion = posicion;
-        this.nombreJugador = nombreJugador;
-        this.fideID = fideID;
-        this.elo = elo;
-        this.gen = gen;
-        this.cv = cv;
-        this.hotel = hotel;
-        this.tipoTorneo = tipoTorneo;
-        this.premioAsignado = premioAsignado;
     }
 
     // Getters y Setters
@@ -128,14 +112,6 @@ public class jugador {
         this.hotel = hotel;
     }
 
-    public premio getPremioAsignado() {
-        return premioAsignado;
-    }
-
-    public void setPremioAsignado(premio premioAsignado) {
-        this.premioAsignado = premioAsignado;
-    }
-
     // Determina si hay igualdad
     @Override
     public boolean equals(Object o) {
@@ -164,7 +140,6 @@ public class jugador {
                 ", gen=" + gen +
                 ", cv=" + cv +
                 ", hotel=" + hotel +
-                ", premioAsignado=" + premioAsignado +
                 '}';
     }
 }

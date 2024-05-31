@@ -258,6 +258,10 @@ public class PrimaryController implements Initializable{
         //Cargamos el controlador de la vista.
         SecondaryController controlador = loader.getController();
 
+        controlador.getAttributes(jugadores);
+
+        controlador.setCheck(true);
+
         //Creamos y cargamos la escena.
         Scene scene = new Scene(secondaryScene);
         Stage stage = new Stage();
@@ -268,18 +272,6 @@ public class PrimaryController implements Initializable{
 
         //Cargamos los datos introducidos a un objeto de jugador.
         j = controlador.getJugador();
-
-        //Si el jugador ya existe en la base de datos, mostramos un error.
-        for (jugador j2 : jugadores) {
-            if (j2.getFideID() == j.getFideID()) {
-                j = null;
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText("Error!");
-                alert.setTitle("Insert Action Error.");
-                alert.setContentText("No puedes insertar un jugador que ya existe");
-                alert.showAndWait();
-            }
-        }
 
         if(j != null) {
             //Preparamos la query.
@@ -354,6 +346,8 @@ public class PrimaryController implements Initializable{
 
                 //Le doy los datos del jugador seleccionado y de la lista de jugadores ya creada.
                 controlador.getAttributes(jugadores, j);
+
+                controlador.setCheck(false);
 
                 //Creamos y mostramos la escena.
                 Scene scene = new Scene(secondaryScene);

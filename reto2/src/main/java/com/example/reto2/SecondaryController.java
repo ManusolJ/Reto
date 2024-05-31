@@ -40,16 +40,22 @@ public class SecondaryController implements Initializable {
     // Lista de jugadores.
     private ObservableList<jugador> jugadores;
 
+    private boolean check;
+
     // Método de inicialización que se llama después de cargar el archivo FXML
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tournamentChoiceBox.getItems().addAll(choices);
     }
 
+    public void getAttributes(ObservableList<jugador> jugadores) {
+        this.jugadores = jugadores;
+    }
+
     // Pasa los datos del jugador seleccionado.
     public void getAttributes(ObservableList<jugador> jugadores, jugador jugador) {
-        this.jugadores = jugadores;
         this.jugador = jugador;
+        this.jugadores = jugadores;
         this.txtNom.setText(this.jugador.getNombreJugador());
         this.txtRank.setText(String.valueOf(this.jugador.getRankIni()));
         this.txtElo.setText(String.valueOf(this.jugador.getElo()));
@@ -66,13 +72,12 @@ public class SecondaryController implements Initializable {
     }
 
     // Diferencia entre añadir y modificar.
-    public boolean addChecker(String fideID) {
-        for (jugador j : jugadores) {
-            if (String.valueOf(j.getFideID()).equals(fideID)) {
-                return false;
-            }
-        }
-        return true;
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
+
+    public boolean getCheck(){
+        return this.check;
     }
 
     // Cancela accion de modificacion.
@@ -87,30 +92,59 @@ public class SecondaryController implements Initializable {
     @FXML
     private void save(ActionEvent event) {
         try {
-            String nomJugador = this.txtNom.getText();
-            String tipoTorneo = this.tournamentChoiceBox.getValue();
-            int rankIni = Integer.parseInt(this.txtRank.getText());
-            int elo = Integer.parseInt(this.txtElo.getText());
-            int fideID = Integer.parseInt(this.txtID.getText());
-            boolean gen = this.genCheck.isSelected();
-            boolean cv = this.cvCheck.isSelected();
-            boolean hotel = this.hotelCheck.isSelected();
+            int rankIni = Integer.parseInt(txtRank.getText());
+            int posicion = 0;
+            String nombreJugador = txtNom.getText();
+            int fideID = Integer.parseInt(txtID.getText());
+            int elo = Integer.parseInt(txtElo.getText());
+            boolean gen = genCheck.isSelected();
+            boolean cv = cvCheck.isSelected();
+            boolean hotel = hotelCheck.isSelected();
+            String tipoTorneo = tournamentChoiceBox.getValue();
+
+        if(check) {
+            for (jugador j1 : jugadores) {
+                if (j1.getRankIni() == rankIni) {
+                    this.jugador = null;
+                    check = false;
+                    break;
+                }
+                if (j1.getFideID() == fideID) {
+                    this.jugador = null;
+                    check = false;
+                    break;
+                }
+            }
+        }
 
             if (this.jugador != null) {
-                this.jugador.setNombreJugador(nomJugador);
+
+                for(jugador j : jugadores){
+                    if(j.getFideID() == fideID  && fideID != this.jugador.getFideID()){
+                        showAlert(Alert.AlertType.ERROR, "Error", "La persona ya existe");
+                        return;
+                    }else if(j.getRankIni() == rankIni && rankIni != this.jugador.getRankIni()){
+                        showAlert(Alert.AlertType.ERROR, "Error", "La persona ya existe");
+                        return;
+                    }
+                }
+
+                this.jugador.setNombreJugador(nombreJugador);
                 this.jugador.setRankIni(rankIni);
                 this.jugador.setElo(elo);
                 this.jugador.setCv(cv);
                 this.jugador.setGen(gen);
                 this.jugador.setHotel(hotel);
-                this.jugador.setPosicion(0);
+                this.jugador.setPosicion(posicion);
                 this.jugador.setFideID(fideID);
                 this.jugador.setTipoTorneo(tipoTorneo);
 
+
+
                 showAlert(Alert.AlertType.INFORMATION, "Información", "Se ha modificado correctamente");
 
-            } else if (addChecker(this.txtID.getText())) {
-                jugador newJugador = new jugador(rankIni, 0, nomJugador, fideID, elo, gen, cv, hotel, tipoTorneo);
+            } else if (check) {
+                jugador newJugador = new jugador(rankIni, 0, nombreJugador, fideID, elo, gen, cv, hotel, tipoTorneo);
                 jugadores.add(newJugador);
                 this.jugador = newJugador;
 
