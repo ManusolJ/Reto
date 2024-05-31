@@ -1,19 +1,35 @@
-.boton-personalizado:hover {
-    -fx-background-color: #C7BCBA;
-}
-
-.boton-personalizado:hover {
-    -fx-background-color: #C7BCBA;
+.exitBtn:hover {
+    -fx-background-color: #FF5D5D;
+    -fx-font-weight: bold;
 }
 
 .boton-eliminar:hover {
     -fx-background-color: #FF5D5D;
+    -fx-font-weight: bold;
 }
 
 .boton-mas:hover {
     -fx-background-color: #A1FF98;
+    -fx-font-weight: bold;
 }
 
 .boton-modify:hover {
-    -fx-background-color: #C7BCBA;
+    -fx-background-color: #33ccff;
+    -fx-font-weight: bold;
 }
+
+.playerBtn:hover{
+    -fx-background-color: #A1FF98;
+    -fx-font-weight: bold;
+}
+
+.prizeBtn:hover{
+    -fx-background-color: #33ccff;
+    -fx-font-weight: bold;
+}
+
+.dataBtn:hover{
+    -fx-background-color: #ff9933;
+    -fx-font-weight: bold;
+}
+

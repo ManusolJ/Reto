@@ -33,10 +33,8 @@ import java.util.logging.Logger;
 
 
 public class PrimaryController implements Initializable{
-    //TODO Comprobar cualquier //TODO// que hay en el codigo.
-    //TODO Intentar hacer funciones de trozos de codigo que sean muy reutilizados.
 
-    //Conexion a base de datos.
+    //Conexión a base de datos.
     private static Connection getConnexion() throws SQLException {
         String url = "jdbc:mariadb://ajedrezalpha.clt77wc4mhcd.us-east-1.rds.amazonaws.com:3306/ajedrez";
         String user = "root";
@@ -44,7 +42,7 @@ public class PrimaryController implements Initializable{
         return DriverManager.getConnection(url, user, password);
     }
 
-    //Botones
+    //Botones.
     @FXML
     private Button addButton, modifyButton, exitButton, removeButton, importButton, exportButton;
 
@@ -52,7 +50,7 @@ public class PrimaryController implements Initializable{
     @FXML
     private Label filterLabel;
 
-    //Campo de texto
+    //Campo de texto.
     @FXML
     private TextField filtertxt;
 
@@ -83,19 +81,25 @@ public class PrimaryController implements Initializable{
 
     jugador j = null;
 
+    //Método Inicializador.
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            //Inicia conexión a base de datos.
             cnx = getConnexion();
 
+            //Añade opciones a la choice box y hace set de un valor para que no quede nula.
             tournChoiceBox.getItems().addAll(choices);
 
             tournChoiceBox.setValue("Open A");
 
+            //Carga los datos.
             loadData();
 
+            //Lista filtrada de jugadores.
             FilteredList<jugador> filteredList = new FilteredList<>(jugadores, b -> true);
 
+            //Añade un listener al campo de texto para que filtre dinámicamente.
             filtertxt.textProperty().addListener((observable, oldValue, newValue) -> {
                 filteredList.setPredicate(jugador -> {
                     if (newValue == null || newValue.isEmpty()) {
@@ -117,15 +121,11 @@ public class PrimaryController implements Initializable{
                 table.setItems(sortedList);
             });
 
+            //Añade un listener a la choice box para que cargue los datos cada vez que cambie su valor.
             tournChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                    try {
-                        loadData();
-                    }catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-
+                    loadData();
                 }
             });
         }catch (SQLException e){
@@ -134,44 +134,54 @@ public class PrimaryController implements Initializable{
     }
 
     //Carga los datos de la base de datos y los añade a la lista de jugadores.
-    public void refreshTable() throws SQLException{
-        jugadores.clear();
+    public void refreshTable(){
+        try {
+            //Borra los objetos de la lista cada vez que se invoca el método.
+            jugadores.clear();
 
-        if(tournChoiceBox.getValue().contains("Open A")) {
-            querysql = "SELECT * FROM jugador WHERE tipoTorneo like 'A'";
-        }else{
-            querysql = "SELECT * FROM jugador WHERE tipoTorneo like 'B'";
+            //Según la selección de la choice box, hace una consulta u otra.
+            if (tournChoiceBox.getValue().contains("Open A")) {
+                querysql = "SELECT * FROM jugador WHERE tipoTorneo like 'A'";
+            } else {
+                querysql = "SELECT * FROM jugador WHERE tipoTorneo like 'B'";
+            }
+
+            ps = cnx.prepareStatement(querysql);
+
+            rs = ps.executeQuery();
+
+            //Añade a la lista los jugadores que se han pedido en la consulta a la base de datos.
+            while (rs.next()) {
+                jugadores.add(new jugador(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getBoolean(6),
+                        rs.getBoolean(7),
+                        rs.getBoolean(8),
+                        rs.getString(9))
+                );
+            }
+            rs.close();
+            ps.close();
+
+            //Se añade a la tabla la lista con los jugadores.
+            table.setItems(jugadores);
+        }catch (SQLException e){
+            e.printStackTrace();
         }
-
-        ps = cnx.prepareStatement(querysql);
-
-        rs = ps.executeQuery();
-
-        while(rs.next()){
-            jugadores.add(new jugador(
-                    rs.getInt(1),
-                    rs.getInt(2),
-                    rs.getString(3),
-                    rs.getInt(4),
-                    rs.getInt(5),
-                    rs.getBoolean(6),
-                    rs.getBoolean(7),
-                    rs.getBoolean(8),
-                    rs.getString(9))
-            );
-        }
-        table.setItems(jugadores);
     }
 
-    //Carga los datos a la tableview.
-    public void loadData() throws SQLException{
-
+    //Carga los datos de la lista de jugadores a las celdas de la tabla.
+    public void loadData(){
         refreshTable();
 
-        this.NombreJugadorCol.setCellValueFactory(new PropertyValueFactory<jugador,String>("nombreJugador"));
-        this.rankIniCol.setCellValueFactory(new PropertyValueFactory<jugador,Integer>("rankIni"));
-        this.eloCol.setCellValueFactory(new PropertyValueFactory<jugador,Integer>("elo"));
-        this.fideIDCol.setCellValueFactory(new PropertyValueFactory<jugador,Integer>("fideID"));
+        this.NombreJugadorCol.setCellValueFactory(new PropertyValueFactory<jugador, String>("nombreJugador"));
+        this.rankIniCol.setCellValueFactory(new PropertyValueFactory<jugador, Integer>("rankIni"));
+        this.eloCol.setCellValueFactory(new PropertyValueFactory<jugador, Integer>("elo"));
+        this.fideIDCol.setCellValueFactory(new PropertyValueFactory<jugador, Integer>("fideID"));
         this.infoCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<jugador, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<jugador, String> p) {
@@ -179,28 +189,28 @@ public class PrimaryController implements Initializable{
                 if (p.getValue().isGen()) {
                     s = s + "Gen ";
                 }
-                if(p.getValue().isCv()){
+                if (p.getValue().isCv()) {
                     s = s + " CV";
                 }
-                if(p.getValue().isHotel()){
+                if (p.getValue().isHotel()) {
                     s = s + " H";
                 }
-                if(p.getValue().getElo() <= 2400 && p.getValue().getTipoTorneo().contains("A")){
+                if (p.getValue().getElo() <= 2400 && p.getValue().getTipoTorneo().contains("A")) {
                     s = s + " Sub2400";
                 }
-                if(p.getValue().getElo() <= 2200 && p.getValue().getTipoTorneo().contains("A")){
+                if (p.getValue().getElo() <= 2200 && p.getValue().getTipoTorneo().contains("A")) {
                     s = s + " Sub2200";
                 }
-                if(p.getValue().getElo() <= 1800 && p.getValue().getTipoTorneo().contains("B") ){
+                if (p.getValue().getElo() <= 1800 && p.getValue().getTipoTorneo().contains("B")) {
                     s = s + " Sub1800";
                 }
-                if(p.getValue().getElo() <= 1600 && p.getValue().getTipoTorneo().contains("B") ){
+                if (p.getValue().getElo() <= 1600 && p.getValue().getTipoTorneo().contains("B")) {
                     s = s + " Sub1600";
                 }
-                if(p.getValue().getElo() <= 1400 && p.getValue().getTipoTorneo().contains("B") ){
+                if (p.getValue().getElo() <= 1400 && p.getValue().getTipoTorneo().contains("B")) {
                     s = s + " Sub1400";
                 }
-                if(!p.getValue().isGen()){
+                if (!p.getValue().isGen()) {
                     s = "DESCALIFICADO";
                 }
                 return new SimpleStringProperty(s);
@@ -208,40 +218,41 @@ public class PrimaryController implements Initializable{
         });
     }
 
-    //Termina el proceso de la pantalla de datos de jugadores y te lleva de vuelta a la pantalla de seleccion.
+    //Termina el proceso de la pantalla de datos de jugadores y te lleva de vuelta a la pantalla de selección.
     public void endAction(){
         try {
+            //Cargamos la vista de selección.
             FXMLLoader loader = new FXMLLoader(getClass().getResource("selectionScreen.fxml"));
 
+            //Cargamos el padre.
             Parent selectionScene = loader.load();
 
+            //Cargamos el controlador de la vista.
             SelectionScreen controller = loader.getController();
 
+            //Creamos y cargamos la escena.
             Scene scene = new Scene(selectionScene);
-
             Stage stage = new Stage();
-
-            stage.setTitle("Selection Screen");
-
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Pantalla principal");
             stage.setScene(scene);
-
             stage.show();
 
+            //Cerramos la ventana actual.
             Stage mystage = (Stage) filterLabel.getScene().getWindow();
-
             mystage.close();
 
         }catch (IOException e){
-            e.getMessage();
+            e.printStackTrace();
         }
     }
 
     //Añade jugador a la base de datos.
     public void addAction(ActionEvent event) throws IOException, SQLException {
-
         //Cargamos la vista secundaria.
         FXMLLoader loader = new FXMLLoader(getClass().getResource("secondaryView.fxml"));
 
+        //Cargamos el padre.
         Parent secondaryScene = loader.load();
 
         //Cargamos el controlador de la vista.
@@ -251,21 +262,30 @@ public class PrimaryController implements Initializable{
         Scene scene = new Scene(secondaryScene);
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Datos");
+        stage.setTitle("Introducir datos de jugador");
         stage.setScene(scene);
         stage.showAndWait();
 
-        //Llamamos a este metodo para decirle al controlador que estamos añadiendo, y no modificando.
-        /*controlador.addChecker();*/
-
         //Cargamos los datos introducidos a un objeto de jugador.
         j = controlador.getJugador();
+
+        //Si el jugador ya existe en la base de datos, mostramos un error.
+        for (jugador j2 : jugadores) {
+            if (j2.getFideID() == j.getFideID()) {
+                j = null;
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText("Error!");
+                alert.setTitle("Insert Action Error.");
+                alert.setContentText("No puedes insertar un jugador que ya existe");
+                alert.showAndWait();
+            }
+        }
 
         if(j != null) {
             //Preparamos la query.
             ps = cnx.prepareStatement("INSERT INTO jugador(rankIni,posicion,NombreJugador,fideID,ELO,gen,CV,hotel,tipoTorneo) VALUES (?,?,?,?,?,?,?,?,?)");
 
-            //Cargamos los parametros del objeto a los parametros de la query.
+            //Cargamos los parámetros del objeto a los parámetros de la query.
             ps.setInt(1, j.getRankIni());
             ps.setInt(2, j.getPosicion());
             ps.setString(3, j.getNombreJugador());
@@ -284,13 +304,12 @@ public class PrimaryController implements Initializable{
         loadData();
     }
 
-    //Realiza accion de borrado sobre jugador.
+    //Realiza acción de borrado sobre la base de datos.
     public void deleteAction(ActionEvent event)throws SQLException{
-
-        //Creo un jugador de la seleccion de la tabla.
+        //Creo un jugador de la selección de la tabla.
         j = this.table.getSelectionModel().getSelectedItem();
 
-        //Si no hay jugador seleccionado, da error.
+        //Si no hay jugador seleccionado, mostramos error.
         if (j == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Error!");
@@ -301,12 +320,11 @@ public class PrimaryController implements Initializable{
             //Preparamos la query.
             ps = cnx.prepareStatement("DELETE FROM jugador WHERE fideID = ?");
 
-            //Usamos el fideID del jugador seleccionado para realizar la accion de borrado.
+            //Usamos el fideID del jugador seleccionado para realizar la acción de borrado.
             ps.setInt(1,j.getFideID());
-
             ps.executeUpdate();
-
             ps.close();
+
             //Refrescamos la vista
             refreshTable();
         }
@@ -314,12 +332,10 @@ public class PrimaryController implements Initializable{
 
     //Modifica los datos del jugador seleccionado.
     public void modifyAction(ActionEvent event){
-        //TODO NO FUNCIONA BIEN, HAY QUE COMPROBAR POR QUE.
-
-        //Creo un jugador de la seleccion de la tabla.
+        //Creo un jugador de la selección de la tabla.
         j = this.table.getSelectionModel().getSelectedItem();
 
-        //Si no hay jugador seleccionado salta error.
+        //Si no hay jugador seleccionado mostramos error.
         if (j == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Error!");
@@ -350,7 +366,7 @@ public class PrimaryController implements Initializable{
                 //Pido los datos del jugador modificado al controlador secundario.
                 jugador jModified = controlador.getJugador();
 
-                //Se llama al metodo que hace el update en la base de datos.
+                //Se llama al método que hace el update en la base de datos.
                try {
                    if (jModified != null) {
                        update(jModified, j.getFideID());
@@ -372,23 +388,26 @@ public class PrimaryController implements Initializable{
 
     //Elige archivo csv y vuelca sus datos en la base de datos.
     public void importDataAction(ActionEvent event) throws IOException,SQLException {
-
         //Ventana de elegir archivo mediante explorador de windows.
         FileChooser fc = new FileChooser();
 
         //Nombre de la ventana.
         fc.setTitle("Elegir archivo CSV.");
 
+        File initialFP = new File(System.getProperty("user.home") + "/Desktop");
+
+        fc.setInitialDirectory(initialFP);
+
         Stage stage = new Stage();
 
         //Creamos un objeto de archivo, y lo definimos como el archivo elegido mediante el file chooser.
         File selectedFile = fc.showOpenDialog(stage);
 
-        //Creamos una lista vacia.
+        //Creamos una lista.
         ArrayList<jugador> list;
 
         if(selectedFile != null) {
-            //Llamamos al metodo que lee el archivo seleccionado y lo transforma en objetos de jugador, lo cuales insertamos en la lista.
+            //Llamamos al método que lee el archivo seleccionado y lo transforma en objetos de jugador, lo cuales insertamos en la lista.
             list = datos(selectedFile);
 
             //Creamos un iterator de la lista que contiene los jugadores.
@@ -433,7 +452,7 @@ public class PrimaryController implements Initializable{
 
         fc.setTitle("Selecciona donde quieres guardar el archivo exportado");
 
-        File initialFP = new File("C:/users/root");
+        File initialFP = new File(System.getProperty("user.home") + "/Desktop");
 
         fc.setInitialDirectory(initialFP);
 
@@ -450,6 +469,7 @@ public class PrimaryController implements Initializable{
             BufferedWriter bw = new BufferedWriter(new FileWriter(selectedFile));
 
             bw.write("Los jugadores optan a los siguientes premios.");
+
             bw.newLine();
 
             //Mientras la query tenga resultados, seguirá escribiendo líneas en el archivo.
@@ -462,14 +482,15 @@ public class PrimaryController implements Initializable{
                 bw.newLine();
                 bw.write("--------------------------------");
             }
+            rs.close();
             ps.close();
             bw.close();
         }
     }
 
+    //TODO Buscar mejor forma de saltar los datos que no nos interesan al principio.
     //Lee datos del archivo csv.
     public ArrayList<jugador> datos(File file) throws IOException{
-
         BufferedReader br = new BufferedReader(new FileReader(file));
 
         String line = "";
@@ -520,7 +541,6 @@ public class PrimaryController implements Initializable{
             }
         }
         return list;
-        //TODO Buscar mejor forma de saltar los datos que no nos interesan al principio.
     }
 
     //Realiza un update sobre la base de datos.

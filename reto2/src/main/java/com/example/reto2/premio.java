@@ -2,24 +2,32 @@ package com.example.reto2;
 
 public class premio {
 
-    private String categoria, tipoTorneo;;
+    // Declaración de atributos del objeto premio.
 
-    private int posicion,importe,fideID;
+    //Nombre del premio y tipo de torneo.
+    private String nombrePremio, tipoTorneo;
 
-    public premio(String categoria,String tipotorneo,int posicion,int importe, int fideID){
-        this.importe = importe;
-        this.categoria = categoria;
+    //Posición del premio, importe, fideID del jugador que ha ganado el premio, ID único del premio, prioridad que tiene el premio.
+    private int posicion,importe,fideID,idPremio,prioridad;
+
+   //Constructor.
+    public premio(String nombrePremio,int posición,int importe,int fideID,String tipotorneo,int idPremio,int prioridad){
+        this.nombrePremio = nombrePremio;
         this.posicion = posicion;
-        this.tipoTorneo = tipotorneo;
+        this.importe = importe;
         this.fideID = fideID;
+        this.tipoTorneo = tipotorneo;
+        this.idPremio = idPremio;
+        this.prioridad = prioridad;
     }
 
-    public String getCategoria() {
-        return categoria;
+    // Getters y Setters.
+    public String getNombrePremio() {
+        return nombrePremio;
     }
 
-    public void SetCategoria(String nombrePremio) {
-        this.categoria = nombrePremio;
+    public void setNombrePremio(String nombrePremio) {
+        this.nombrePremio = nombrePremio;
     }
 
     public String getTipoTorneo() {
@@ -54,14 +62,33 @@ public class premio {
         this.fideID = fideID;
     }
 
+    public int getIdPremio() {
+        return idPremio;
+    }
+
+    public void setIdPremio(int idPremio) {
+        this.idPremio = idPremio;
+    }
+
+    public int getPrioridad() {
+        return prioridad;
+    }
+
+    public void setPrioridad(int prioridad) {
+        this.prioridad = prioridad;
+    }
+
+    // Método toString
     @Override
     public String toString() {
         return "premio{" +
-                "categoria='" + categoria + '\'' +
-                ", tipoTorneo='" + tipoTorneo + '\'' +
-                ", posicion=" + posicion +
-                ", importe=" + importe +
-                ", fideID=" + fideID +
+                "nombrePremio = '" + nombrePremio + '\'' +
+                ", tipoTorneo = '" + tipoTorneo + '\'' +
+                ", posición = " + posicion +
+                ", importe = " + importe +
+                ", fideID = " + fideID +
+                ", idPremio = " + idPremio +
+                ", prioridad = " + prioridad +
                 '}';
     }
 }

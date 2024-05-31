@@ -40,6 +40,7 @@ public class SecondaryController implements Initializable {
     // Lista de jugadores.
     private ObservableList<jugador> jugadores;
 
+    // Método de inicialización que se llama después de cargar el archivo FXML
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tournamentChoiceBox.getItems().addAll(choices);

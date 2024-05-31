@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="563.0" prefWidth="779.0" style="-fx-background-color: grey;" stylesheets="@hojaestilo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reto2.PrimaryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: grey;" stylesheets="@hojaestilo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reto2.PrimaryController">
     <children>
-      <ImageView fitHeight="563.0" fitWidth="779.0" pickOnBounds="true">
+      <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true">
          <image>
             <Image url="@azul.png" />
          </image>
@@ -23,26 +23,41 @@
             <Image url="@peon.png" />
          </image>
       </ImageView>
-        <TableView fx:id="table" layoutX="199.0" layoutY="20.0" prefHeight="524.0" prefWidth="566.0" style="-fx-border-color: black;">
+        <TableView fx:id="table" layoutX="199.0" layoutY="20.0" prefHeight="564.0" prefWidth="684.0" style="-fx-border-color: black;">
             <columns>
-                <TableColumn fx:id="NombreJugadorCol" prefWidth="151.0" style="-fx-border-color: black;" text="Nombre" />
-                <TableColumn fx:id="rankIniCol" prefWidth="98.0" style="-fx-border-color: black;" text="Rango Inicial" />
-            <TableColumn fx:id="eloCol" prefWidth="87.0" style="-fx-border-color: black;" text="ELO" />
-                <TableColumn fx:id="fideIDCol" minWidth="0.0" prefWidth="118.0" style="-fx-border-color: black;" text="FIDE ID" />
-                <TableColumn fx:id="infoCol" prefWidth="110.0" style="-fx-border-color: #716d6d;" text="Info" />
+                <TableColumn fx:id="NombreJugadorCol" editable="false" prefWidth="163.0" style="-fx-border-color: black;" text="Nombre" />
+                <TableColumn fx:id="rankIniCol" editable="false" prefWidth="94.0" style="-fx-border-color: black;" text="Rango Inicial" />
+            <TableColumn fx:id="eloCol" editable="false" prefWidth="91.0" style="-fx-border-color: black;" text="ELO" />
+                <TableColumn fx:id="fideIDCol" editable="false" minWidth="0.0" prefWidth="112.0" style="-fx-border-color: black;" text="FIDE ID" />
+                <TableColumn fx:id="infoCol" editable="false" prefWidth="222.0" style="-fx-border-color: black;" text="Info" />
             </columns>
         </TableView>
-        <Button fx:id="addB" layoutX="12.0" layoutY="184.0" mnemonicParsing="false" onAction="#addAction" prefHeight="34.0" prefWidth="119.0" styleClass="boton-mas" text="Añadir" />
-        <Button fx:id="modB" layoutX="12.0" layoutY="144.0" mnemonicParsing="false" onAction="#modifyAction" prefHeight="34.0" prefWidth="119.0" styleClass="boton-modify" text="Modificar" />
-        <Label fx:id="filterLabel" layoutX="15.0" layoutY="30.0" prefHeight="26.0" prefWidth="149.0" text="Filtrar :">
+        <Button fx:id="addB" layoutX="15.0" layoutY="174.0" mnemonicParsing="false" onAction="#addAction" prefHeight="34.0" prefWidth="119.0" styleClass="boton-mas" text="Añadir" textAlignment="JUSTIFY">
          <font>
-            <Font size="20.0" />
+            <Font name="Arial" size="12.0" />
+         </font></Button>
+        <Button fx:id="modB" layoutX="15.0" layoutY="128.0" mnemonicParsing="false" onAction="#modifyAction" prefHeight="34.0" prefWidth="119.0" styleClass="boton-modify" text="Modificar" textAlignment="JUSTIFY">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font></Button>
+        <Label fx:id="filterLabel" layoutX="15.0" layoutY="20.0" prefHeight="26.0" prefWidth="149.0" text="Filtrar :">
+         <font>
+            <Font name="Arial Bold" size="20.0" />
          </font></Label>
-        <TextField fx:id="filtertxt" layoutX="14.0" layoutY="59.0" prefHeight="26.0" prefWidth="150.0" />
-        <Button fx:id="rmB" layoutX="12.0" layoutY="224.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="34.0" prefWidth="119.0" styleClass="boton-eliminar" text="Eliminar" />
-        <Button fx:id="outB" layoutX="35.0" layoutY="515.0" mnemonicParsing="false" onAction="#endAction" prefHeight="26.0" prefWidth="107.0" styleClass="boton-personalizado" text="Salir" />
-        <Button fx:id="importButton" layoutX="12.0" layoutY="265.0" mnemonicParsing="false" onAction="#importDataAction" prefHeight="34.0" prefWidth="119.0" styleClass="boton-personalizado" text="Importar Datos" />
-      <ChoiceBox fx:id="tournChoiceBox" layoutX="14.0" layoutY="102.0" prefWidth="150.0" />
+        <TextField fx:id="filtertxt" layoutX="15.0" layoutY="50.0" prefHeight="26.0" prefWidth="150.0" styleClass="filterPrimary" />
+        <Button fx:id="rmB" layoutX="15.0" layoutY="221.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="34.0" prefWidth="119.0" styleClass="boton-eliminar" text="Eliminar" textAlignment="JUSTIFY">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font></Button>
+        <Button fx:id="outB" layoutX="40.0" layoutY="561.0" mnemonicParsing="false" onAction="#endAction" prefHeight="26.0" prefWidth="107.0" styleClass="exitBtn" text="Salir" textAlignment="JUSTIFY">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font></Button>
+        <Button fx:id="importButton" layoutX="15.0" layoutY="266.0" mnemonicParsing="false" onAction="#importDataAction" prefHeight="34.0" prefWidth="119.0" styleClass="dataBtn" text="Importar Datos" textAlignment="JUSTIFY">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font></Button>
+      <ChoiceBox fx:id="tournChoiceBox" layoutX="15.0" layoutY="90.0" prefWidth="150.0" />
       <Label layoutX="8.0" layoutY="369.0" prefHeight="52.0" prefWidth="56.0" text="BENI">
          <font>
             <Font name="System Bold" size="20.0" />
@@ -73,6 +88,9 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <Button fx:id="exportButton" layoutX="12.0" layoutY="307.0" mnemonicParsing="false" onAction="#exportDataAction" prefHeight="34.0" prefWidth="119.0" styleClass="boton-personalizado" text="Exportar Datos" />
+      <Button fx:id="exportButton" layoutX="15.0" layoutY="312.0" mnemonicParsing="false" onAction="#exportDataAction" prefHeight="34.0" prefWidth="119.0" styleClass="dataBtn" text="Exportar Datos" textAlignment="JUSTIFY">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font></Button>
     </children>
 </AnchorPane>

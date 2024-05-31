@@ -18,17 +18,17 @@
             <Image url="@azul.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="257.0" fitWidth="227.0" layoutY="270.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="214.0" fitWidth="201.0" layoutX="4.0" layoutY="309.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@peonblancocorona.png" />
          </image>
       </ImageView>
-      <Label fx:id="filterLabel" layoutX="14.0" layoutY="36.0" prefHeight="31.0" prefWidth="77.0" text="Filtrar:">
+      <Label fx:id="filterLabel" layoutX="16.0" layoutY="23.0" prefHeight="31.0" prefWidth="77.0" text="Filtrar:">
          <font>
             <Font name="System Bold" size="18.0" />
          </font></Label>
-      <TextField fx:id="txtFilter" layoutX="14.0" layoutY="74.0" prefHeight="26.0" prefWidth="150.0" />
-      <Button fx:id="exitBtn" layoutX="70.0" layoutY="518.0" mnemonicParsing="false" onAction="#endAction" prefHeight="31.0" prefWidth="69.0" styleClass="boton-personalizado" text="Salir" />
+      <TextField fx:id="txtFilter" layoutX="14.0" layoutY="54.0" prefHeight="26.0" prefWidth="150.0" />
+      <Button fx:id="exitBtn" layoutX="70.0" layoutY="518.0" mnemonicParsing="false" onAction="#endAction" prefHeight="31.0" prefWidth="69.0" styleClass="exitBtn" text="Salir" />
       <TableView fx:id="table" layoutX="240.0" layoutY="23.0" prefHeight="526.0" prefWidth="474.0" style="-fx-border-color: black;">
         <columns>
           <TableColumn fx:id="posCol" prefWidth="162.0" style="-fx-border-color: black;" text="Posicion" />
@@ -36,8 +36,9 @@
             <TableColumn fx:id="prizeCol" prefWidth="157.0" style="-fx-border-color: black;" text="Importe" />
         </columns>
       </TableView>
-      <ChoiceBox fx:id="tournChoiceBox" layoutX="14.0" layoutY="119.0" prefWidth="150.0" />
-      <ChoiceBox fx:id="prizeChoiceBox" layoutX="14.0" layoutY="157.0" prefWidth="150.0" />
-      <Button fx:id="winnerImport" layoutX="16.0" layoutY="202.0" mnemonicParsing="false" onAction="#importWinnerAction" prefHeight="31.0" prefWidth="150.0" text="Importar ganadores" />
+      <ChoiceBox fx:id="tournChoiceBox" layoutX="14.0" layoutY="92.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="prizeChoiceBox" layoutX="14.0" layoutY="127.0" prefWidth="150.0" />
+      <Button fx:id="winnerImport" layoutX="14.0" layoutY="202.0" mnemonicParsing="false" onAction="#importWinnerAction" prefHeight="31.0" prefWidth="150.0" styleClass="dataBtn" text="Importar ganadores" />
+      <Button fx:id="winnerExport" layoutX="14.0" layoutY="255.0" mnemonicParsing="false" onAction="#exportWinnerAction" prefHeight="31.0" prefWidth="150.0" styleClass="dataBtn" text="Exportar ganadores" />
    </children>
 </AnchorPane>

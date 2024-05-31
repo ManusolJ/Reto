@@ -9,36 +9,27 @@ import java.util.Scanner;
 public class jugador {
 
     // Declaración de atributos de la tabla jugador
-    // Ranking Inicial
-    private int rankIni;
 
-    // Posición / Puesto final
-    private int posicion;
+    // Ranking Inicial, Posicion Final, fideID, Elo.
+    private int rankIni,posicion,fideID,elo;
 
-    private String nombreJugador;
+    // Nombre del jugador, Torneo al que pertenece.
+    private String nombreJugador,tipoTorneo;
 
-    private int fideID;
+    // Marcador para ver si opta a general, comunidad valenciana, alojamiento.
+    private boolean gen,cv,hotel;
 
-    private int elo;
+    //El premio asignado al jugador.
+    private premio premioAsignado;
 
-    // General
-    private boolean gen;
-
-    // Comunidad Valenciana
-    private boolean cv;
-
-    //Alojamiento
-    private boolean hotel;
-
-    // OpenA u OpenB
-    private String tipoTorneo;
-
+    //Constructor de jugador para realizar update sobre la posicion final.
     public jugador(int posicion,int rankIni, String nombreJugador) {
         this.posicion = posicion;
         this.rankIni = rankIni;
         this.nombreJugador = nombreJugador;
     }
 
+    //Constructor de jugador inicial.
     public jugador(int rankIni,int posicion,String nombreJugador,int fideID,int elo,boolean gen,boolean cv,boolean hotel,String tipoTorneo){
         this.rankIni = rankIni;
         this.posicion = posicion;
@@ -51,8 +42,20 @@ public class jugador {
         this.tipoTorneo = tipoTorneo;
     }
 
-    // Getters y Setters
+    public jugador(int rankIni,int posicion,String nombreJugador,int fideID,int elo,boolean gen,boolean cv,boolean hotel,String tipoTorneo,premio premioAsignado){
+        this.rankIni = rankIni;
+        this.posicion = posicion;
+        this.nombreJugador = nombreJugador;
+        this.fideID = fideID;
+        this.elo = elo;
+        this.gen = gen;
+        this.cv = cv;
+        this.hotel = hotel;
+        this.tipoTorneo = tipoTorneo;
+        this.premioAsignado = premioAsignado;
+    }
 
+    // Getters y Setters
     public int getRankIni() {
         return rankIni;
     }
@@ -69,14 +72,6 @@ public class jugador {
         this.posicion = posicion;
     }
 
-    public String getNombreJugador() {
-        return nombreJugador;
-    }
-
-    public void setNombreJugador(String nombreJugador) {
-        this.nombreJugador = nombreJugador;
-    }
-
     public int getFideID() {
         return fideID;
     }
@@ -91,6 +86,22 @@ public class jugador {
 
     public void setElo(int elo) {
         this.elo = elo;
+    }
+
+    public String getNombreJugador() {
+        return nombreJugador;
+    }
+
+    public void setNombreJugador(String nombreJugador) {
+        this.nombreJugador = nombreJugador;
+    }
+
+    public String getTipoTorneo() {
+        return tipoTorneo;
+    }
+
+    public void setTipoTorneo(String tipoTorneo) {
+        this.tipoTorneo = tipoTorneo;
     }
 
     public boolean isGen() {
@@ -117,12 +128,12 @@ public class jugador {
         this.hotel = hotel;
     }
 
-    public String getTipoTorneo() {
-        return tipoTorneo;
+    public premio getPremioAsignado() {
+        return premioAsignado;
     }
 
-    public void setTipoTorneo(String tipoTorneo) {
-        this.tipoTorneo = tipoTorneo;
+    public void setPremioAsignado(premio premioAsignado) {
+        this.premioAsignado = premioAsignado;
     }
 
     // Determina si hay igualdad
@@ -146,13 +157,14 @@ public class jugador {
         return "jugador{" +
                 "rankIni=" + rankIni +
                 ", posicion=" + posicion +
-                ", nombreJugador='" + nombreJugador + '\'' +
                 ", fideID=" + fideID +
                 ", elo=" + elo +
+                ", nombreJugador='" + nombreJugador + '\'' +
+                ", tipoTorneo='" + tipoTorneo + '\'' +
                 ", gen=" + gen +
                 ", cv=" + cv +
                 ", hotel=" + hotel +
-                ", tipoTorneo='" + tipoTorneo + '\'' +
+                ", premioAsignado=" + premioAsignado +
                 '}';
     }
 }

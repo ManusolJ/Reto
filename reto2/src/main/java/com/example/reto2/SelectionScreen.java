@@ -19,44 +19,44 @@ import java.util.logging.Logger;
 
 public class SelectionScreen implements Initializable {
 
-    // Método de inicialización que se llama después de cargar el archivo FXML
+    // Método de inicialización que se llama después de cargar el archivo FXML.
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 
-    // Referencias a los componentes definidos en el archivo FXML
+    // Referencias a los componentes definidos en el archivo FXML.
     @FXML
     private Button clsButton, datosJugadores, premiosGanados;
 
-    // Método para cerrar la aplicación cuando se presiona el botón de cerrar
+    // Método para cerrar la aplicación cuando se presiona el botón de cerrar.
     public void closeAction(ActionEvent event) {
         Platform.exit();
     }
 
-    // Método para abrir la vista primaria cuando se presiona el botón correspondiente
+    // Método para abrir la vista primaria cuando se presiona el botón correspondiente.
     public void openData(ActionEvent event) throws IOException {
         try {
-            // Cargar el archivo FXML para la vista primaria
+            // Cargar el archivo FXML para la vista primaria.
             FXMLLoader loader = new FXMLLoader(getClass().getResource("primaryView.fxml"));
 
-            // Cargar la vista primaria
+            // Cargar la vista primaria.
             Parent primaryScene = loader.load();
 
             // Obtener el controlador asociado con la vista primaria.
             PrimaryController controller = loader.getController();
 
-            // Configurar una nueva escena y escenario para la vista primaria
+            // Configurar una nueva escena y escenario para la vista primaria.
             Scene scene = new Scene(primaryScene);
             Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL); // Hacer que la nueva ventana sea modal
-            stage.setTitle("Datos del Torneo"); // Establecer el título de la nueva ventana
-            stage.setScene(scene); // Establecer la escena de la nueva ventana
-            stage.show(); // Mostrar la nueva ventana
+            stage.initModality(Modality.APPLICATION_MODAL); // Hacer que la nueva ventana sea modal.
+            stage.setTitle("Datos del Torneo"); // Establecer el título de la nueva ventana.
+            stage.setScene(scene); // Establecer la escena de la nueva ventana.
+            stage.show(); // Mostrar la nueva ventana.
 
-            // Configurar la acción al cerrar la ventana
+            // Configurar la acción al cerrar la ventana.
             stage.setOnCloseRequest(e -> controller.endAction());
 
-            // Cerrar la ventana actual
+            // Cerrar la ventana actual.
             Stage myStage = (Stage) this.datosJugadores.getScene().getWindow();
             myStage.close();
 
@@ -65,32 +65,30 @@ public class SelectionScreen implements Initializable {
         }
     }
 
-    // Método para abrir la pantalla de premios cuando se presiona el botón correspondiente
+    // Método para abrir la pantalla de premios cuando se presiona el botón correspondiente.
     public void openPrizeScreen(ActionEvent event) throws IOException {
-        // Cargar el archivo FXML para la vista de premios
+        // Cargar el archivo FXML para la vista de premios.
         FXMLLoader loader = new FXMLLoader(getClass().getResource("prizeView.fxml"));
 
-        // Cargar la vista de premios
+        // Cargar la vista de premios.
         Parent primaryScene = loader.load();
 
-        // Obtener el controlador asociado con la vista de premios
+        // Obtener el controlador asociado con la vista de premios.
         PrizeController controller = loader.getController();
 
-        // Configurar una nueva escena y escenario para la vista de premios
+        // Configurar una nueva escena y escenario para la vista de premios.
         Scene scene = new Scene(primaryScene);
         Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL); // Hacer que la nueva ventana sea modal
-        stage.setTitle("Ganadores del Torneo"); // Establecer el título de la nueva ventana
-        stage.setScene(scene); // Establecer la escena de la nueva ventana
-        stage.show(); // Mostrar la nueva ventana
+        stage.initModality(Modality.APPLICATION_MODAL); // Hacer que la nueva ventana sea modal.
+        stage.setTitle("Ganadores del Torneo"); // Establecer el título de la nueva ventana.
+        stage.setScene(scene); // Establecer la escena de la nueva ventana.
+        stage.show(); // Mostrar la nueva ventana.
 
-        // Configurar la acción al cerrar la ventana
+        // Configurar la acción al cerrar la ventana.
         stage.setOnCloseRequest(e -> controller.endAction());
 
-        // Cerrar la ventana actual
+        // Cerrar la ventana actual.
         Stage myStage = (Stage) this.datosJugadores.getScene().getWindow();
         myStage.close();
     }
-
-    //TODO Darle estilo a los botones, configurar dynamic resize.
 }
